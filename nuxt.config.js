@@ -4,7 +4,8 @@ export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: "Challenge-Multiplier-Nuxt",
-    meta: [{
+    meta: [
+      {
         charset: "utf-8"
       },
       {
@@ -17,11 +18,13 @@ export default {
         content: ""
       }
     ],
-    link: [{
-      rel: "icon",
-      type: "image/x-icon",
-      href: "/favicon.ico"
-    }]
+    link: [
+      {
+        rel: "icon",
+        type: "image/x-icon",
+        href: "/favicon.ico"
+      }
+    ]
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
@@ -42,12 +45,22 @@ export default {
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     // https://go.nuxtjs.dev/bootstrap
-    ["bootstrap-vue/nuxt", {
-      icons: true,
-    }],
+    [
+      "bootstrap-vue/nuxt",
+      {
+        icons: true
+      }
+    ],
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
-    "@nuxtjs/auth-next"
+    "@nuxtjs/auth-next",
+    [
+      "vue-sweetalert2/nuxt",
+      {
+        confirmButtonColor: "#41b882",
+        cancelButtonColor: "#ff7674"
+      }
+    ]
   ],
 
   auth: {
