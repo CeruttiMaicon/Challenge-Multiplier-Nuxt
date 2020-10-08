@@ -40,8 +40,8 @@ export default {
   },
   methods:{
     async logout(){
-      await this.$auth.logout(/* .... */)
-      await document.location.reload(true);
+      await this.$auth.logout('/login')
+      await this.$router.push('/login')
     }
   }
 }
