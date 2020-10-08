@@ -60,9 +60,8 @@ export default {
           }
         })
         .then((response) => {
-
           this.validation = true
-          document.location.reload(true);
+          this.$router.push('/')
         }).catch(({response: {
           data: { error },
           status

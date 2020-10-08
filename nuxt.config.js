@@ -4,8 +4,7 @@ export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: "Challenge-Multiplier-Nuxt",
-    meta: [
-      {
+    meta: [{
         charset: "utf-8"
       },
       {
@@ -18,13 +17,11 @@ export default {
         content: ""
       }
     ],
-    link: [
-      {
-        rel: "icon",
-        type: "image/x-icon",
-        href: "/favicon.ico"
-      }
-    ]
+    link: [{
+      rel: "icon",
+      type: "image/x-icon",
+      href: "/favicon.ico"
+    }]
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
