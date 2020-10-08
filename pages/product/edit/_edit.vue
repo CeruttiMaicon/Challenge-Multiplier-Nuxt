@@ -2,7 +2,7 @@
   <b-container class="bv-example-row">
     <b-row>
       <b-col>
-        <category-form edit title="Editar Categoria" @change="submit" :error-message="error_message"></category-form>
+        <product-form edit title="Editar Produto" @change="submit" :error-message="error_message"></product-form>
       </b-col>
     </b-row>
   </b-container>
@@ -21,7 +21,7 @@ export default {
     submit(form){
       this.$axios
         .$patch(
-          `category/${form.id}`, form
+          `product/${form.id}`, form
         )
         .then(({success, data, message, error_message}) => {
           if(success == true)
@@ -31,7 +31,7 @@ export default {
               message,
               'success'
             ).then(() => {
-                this.$router.push('/category')
+                this.$router.push('/product')
             })
           }
         }).catch((error) => {

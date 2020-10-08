@@ -16,7 +16,6 @@
 
 export default {
   mounted() {
-    console.log('index categorias')
     this.getCategories()
   },
   data() {
