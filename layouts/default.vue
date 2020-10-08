@@ -7,7 +7,7 @@
 
       <b-navbar-nav>
         <b-nav-item class="text-white" to="/usuario">Usuários</b-nav-item>
-        <b-nav-item class="text-white" to="/categoria">Categorias</b-nav-item>
+        <b-nav-item class="text-white" to="/category">Categorias</b-nav-item>
         <b-nav-item class="text-white" to="/produto">Produtos</b-nav-item>
         <b-nav-item class="text-white" to="/pedido">Pedidos</b-nav-item>
       </b-navbar-nav>

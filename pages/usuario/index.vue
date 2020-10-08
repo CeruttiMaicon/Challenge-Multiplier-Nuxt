@@ -2,7 +2,7 @@
   <b-container class="bv-example-row">
     <b-row>
       <b-col>
-        <Table :fields="fields" :items="items" title="Usuários">
+        <Table :fields="fields" :items="items" title="Usuários" route="usuario">
           <template v-slot:header>
             <b-icon-person font-scale="4" ></b-icon-person>
           </template>
