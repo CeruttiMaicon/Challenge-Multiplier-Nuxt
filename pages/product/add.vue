@@ -2,7 +2,7 @@
   <b-container class="bv-example-row">
     <b-row>
       <b-col>
-        <category-form edit title="Editar Categoria" @change="submit" :error-message="error_message"></category-form>
+        <product-form @change="submit" title="Adicionar Produto" :error-message="error_message"></product-form>
       </b-col>
     </b-row>
   </b-container>
@@ -20,18 +20,18 @@ export default {
   methods: {
     submit(form){
       this.$axios
-        .$patch(
-          `category/${form.id}`, form
+        .$post(
+          'product', form
         )
         .then(({success, data, message, error_message}) => {
           if(success == true)
           {
             Swal.fire(
-              'Atualizado!',
+              'Registrado!',
               message,
               'success'
             ).then(() => {
-                this.$router.push('/category')
+                this.$router.push('/product')
             })
           }
         }).catch((error) => {
