@@ -23,11 +23,17 @@
             </b-tr>
           </b-thead>
           <b-tbody>
-            <b-tr v-for="(item, index) in items" :key="index" >
+            <b-tr v-if="items.length == 0" >
+              <b-th class="text-center" :colspan="fields.length+1">Nenhum resultado encontrado</b-th>
+            </b-tr>
+            <b-tr v-else v-for="(item, index) in items" :key="index" >
               <b-th v-for="(it, index) in item" :key="index" >
                 {{it}}
               </b-th>
               <b-th class="text-center">
+                <slot class="text-center" name="action"></slot>
+              </b-th>
+              <b-th v-if="hasFooterAction()">
                 <b-button-group>
                   <b-button :to="route +`/`+item.codigo" >Visualizar</b-button>
                   <b-button :to="route +`/edit/`+item.codigo" variant="primary">Editar</b-button>
@@ -72,16 +78,17 @@ import Swal from 'sweetalert2'
       },
       route:{
         type: String,
-        required: true
       },
       routeAdd: {
         type: String,
-        required: true
       }
     },
     methods:{
       loader(){
         this.loading = false
+      },
+      hasFooterAction() {
+        return !this.$slots.action
       },
       destroy(id) {
         Swal.fire({

@@ -28,7 +28,7 @@
           :message-error="errorMessage.category_id != '' ? String(errorMessage.category_id) : String(errorMessage.category_id)"
           v-model="form.category_id"
           :initial-value="form.category_id"
-          placeholder="0.00"
+          placeholder="Selecione uma Categoria"
           name="category_id"
           label="Categoria"
           :options="categories"
