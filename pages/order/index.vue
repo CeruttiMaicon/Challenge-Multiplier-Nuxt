@@ -39,7 +39,7 @@ export default {
         .then(({data, success}) => {
           this.items = data.map(({id, updated_at, total}) => {
             const date_of_sale = moment(updated_at).format('DD/MM/YYYY HH:mm:ss');
-            return {codigo:id, date_of_sale, value:`R$ ${total}` }
+            return {codigo:id, date_of_sale, value:total }
           });
         })
     }

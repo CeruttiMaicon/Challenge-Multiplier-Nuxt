@@ -5,7 +5,7 @@
         <div class="text-center" v-if="loading">
           <b-spinner style="width: 3rem; height: 3rem;" label="Loading..."></b-spinner>
         </div>
-        <card-form title="Visualizar Produto" route-back="/product">
+        <card-form v-else title="Visualizar Produto" route-back="/product">
           <b-row>
             <b-col>
               Código: {{item.id}}

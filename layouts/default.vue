@@ -6,7 +6,7 @@
       <b-navbar-brand to="/">{{appName}}</b-navbar-brand>
 
       <b-navbar-nav>
-        <b-nav-item class="text-white" to="/usuario">Usuários</b-nav-item>
+        <b-nav-item class="text-white" to="/user">Usuários</b-nav-item>
         <b-nav-item class="text-white" to="/category">Categorias</b-nav-item>
         <b-nav-item class="text-white" to="/product">Produtos</b-nav-item>
         <b-nav-item class="text-white" to="/order">Pedidos</b-nav-item>
@@ -19,7 +19,7 @@
             {{user.name}}
           </template>
           <b-dropdown-item to="/logs">Logs</b-dropdown-item>
-          <b-dropdown-item to="/usuario/criar">Cadastrar Novo Usuário</b-dropdown-item>
+          <b-dropdown-item to="/user/add">Cadastrar Novo Usuário</b-dropdown-item>
           <b-dropdown-item @click="logout" href="#">Logout</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>

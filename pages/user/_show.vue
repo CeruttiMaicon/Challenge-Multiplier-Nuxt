@@ -5,7 +5,7 @@
         <div class="text-center" v-if="loading">
           <b-spinner style="width: 3rem; height: 3rem;" label="Loading..."></b-spinner>
         </div>
-        <card-form v-else title="Visualizar Categoria" route-back="/category">
+        <card-form v-else title="Visualizar Usuário" route-back="/user">
           <b-row>
             <b-col>
               Código: {{item.id}}
@@ -14,6 +14,11 @@
           <b-row>
             <b-col>
               Nome: {{item.name}}
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col>
+              E-mail: {{item.email}}
             </b-col>
           </b-row>
         </card-form>
@@ -25,7 +30,7 @@
 <script>
   export default {
     mounted() {
-      this.getCategory()
+      this.getUser()
     },
     data() {
       return {
@@ -37,10 +42,11 @@
       }
     },
     methods:{
-      getCategory(){
+      getUser(){
+        console.log(this.id)
         this.$axios
           .$get(
-            `category/`+this.id
+            `user/`+this.id
           )
           .then(({success, data, message, error_message}) => {
             if(success == true)

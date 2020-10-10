@@ -2,7 +2,7 @@
   <b-container class="bv-example-row">
     <b-row>
       <b-col>
-        <table-custom :footer="false" buttom-add show remove custom-action :remove-option="false" :fields="fields" :items="items" title="Usuários" route="user" route-add="/user/add">
+        <table-custom buttom-add show remove :fields="fields" :items="items" title="Usuários" route="user" route-add="/user/add">
           <template v-slot:header>
             <b-icon-person font-scale="4" ></b-icon-person>
           </template>
@@ -16,26 +16,26 @@
 
 export default {
   mounted() {
-    this.getLogs()
+    this.getUsers()
   },
   data() {
     return {
       fields: [
         { key: 'codigo', label: 'Código' },
-        { key: 'message', label: 'Mensagem' }
+        { key: 'name', label: 'Nome' }
       ],
       items: [],
     }
   },
   methods:{
-    getLogs(){
+    getUsers(){
       this.$axios
         .$get(
-          "log"
+          "user"
         )
         .then(({data}) => {
-          this.items = data.map(({id, message}) => {
-            return {codigo:id, message }
+          this.items = data.map(({id, name}) => {
+            return {codigo:id, name:name }
           });
         })
     }
