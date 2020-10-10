@@ -75,7 +75,7 @@ export default {
             propertyName: "token"
           },
           user: {
-            url: "/user",
+            url: "/user/auth",
             method: "get",
             propertyName: false
           }
