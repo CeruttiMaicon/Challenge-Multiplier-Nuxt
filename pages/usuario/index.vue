@@ -2,11 +2,11 @@
   <b-container class="bv-example-row">
     <b-row>
       <b-col>
-        <Table :fields="fields" :items="items" title="Usuários" route="usuario">
+        <table-custom buttom-add  show edit remove :fields="fields" :items="items" title="Usuários" route="usuario">
           <template v-slot:header>
             <b-icon-person font-scale="4" ></b-icon-person>
           </template>
-        </Table>
+        </table-custom>
       </b-col>
     </b-row>
   </b-container>
@@ -16,9 +16,6 @@
 
 
 export default {
-  mounted() {
-    console.log('index usuarios')
-  },
   data() {
     return {
       fields: [

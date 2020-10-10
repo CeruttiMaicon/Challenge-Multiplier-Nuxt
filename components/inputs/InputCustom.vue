@@ -20,7 +20,6 @@ export default {
     },
     label:{
       type: String,
-      required: true
     },
     description: {
       type: String

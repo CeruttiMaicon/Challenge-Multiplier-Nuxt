@@ -2,7 +2,7 @@
   <b-container class="bv-example-row">
     <b-row>
       <b-col>
-        <table-custom :fields="fields" :items="items" title="Categorias" route="category" route-add="/category/add">
+        <table-custom buttom-add show edit remove :fields="fields" :items="items" title="Categorias" route="category" route-add="/category/add">
           <template v-slot:header>
             <b-icon-tags font-scale="4" ></b-icon-tags>
           </template>

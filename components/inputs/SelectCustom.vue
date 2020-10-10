@@ -4,7 +4,7 @@
     :label="label"
     :description="description"
   >
-    <multiselect @input="handleInput" label="title" v-model="initialValue" :options="options"></multiselect>
+    <multiselect label="title" @close="onTouch" :placeholder="placeholder" @input="handleInput" v-model="initialValue" :options="options"></multiselect>
 
     <b-form-invalid-feedback :state="stateError">
       {{ messageError}}
@@ -27,7 +27,6 @@ export default {
     },
     label:{
       type: String,
-      required: true
     },
     description: {
       type: String
@@ -62,21 +61,27 @@ export default {
     return {
       size: "",
       initialValue: "",
+      isTouched: false,
     }
   },
-  async beforeUpdate() {
+  async mounted() {
     await this.setInitialValue()
   },
   methods: {
     setInitialValue(){
-      this.initialValue = this.options.filter(data => {
-        return data.value == this.value
+      this.$nextTick(() => {
+        this.initialValue = this.options.filter(data => {
+          return data.value == this.value
+        })
       })
     },
     handleInput(e)
     {
       this.$emit("input", e.value);
     },
+    onTouch () {
+      this.isTouched = true
+    }
   },
 }
 </script>

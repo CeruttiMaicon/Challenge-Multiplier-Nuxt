@@ -23,22 +23,33 @@
             </b-tr>
           </b-thead>
           <b-tbody>
-            <b-tr v-for="(item, index) in items" :key="index" >
+            <b-tr v-if="items.length == 0" >
+              <b-th class="text-center" :colspan="fields.length+1">Nenhum resultado encontrado</b-th>
+            </b-tr>
+            <b-tr v-else v-for="(item, index) in items" :key="index" >
               <b-th v-for="(it, index) in item" :key="index" >
                 {{it}}
               </b-th>
-              <b-th class="text-center">
+              <b-th v-if="customAction" class="text-center">
+                <slot v-bind:index="index" name="action"></slot>
+              </b-th>
+              <b-th class="text-center" v-else>
                 <b-button-group>
-                  <b-button :to="route +`/`+item.codigo" >Visualizar</b-button>
-                  <b-button :to="route +`/edit/`+item.codigo" variant="primary">Editar</b-button>
-                  <b-button @click="destroy(item.codigo)" variant="danger">Excluir</b-button>
+                  <b-button v-if="show" :to="route +`/`+item.codigo" >Visualizar</b-button>
+                  <b-button v-if="edit" :to="route +`/edit/`+item.codigo" variant="primary">Editar</b-button>
+                  <b-button v-if="remove" @click="destroy(item.codigo)" variant="danger">Excluir</b-button>
                 </b-button-group>
               </b-th>
             </b-tr>
           </b-tbody>
         </b-table-simple>
         <template v-slot:footer>
-          <b-button :to="routeAdd" variant="success">Adicionar</b-button>
+          <b-button v-if="buttomAdd" :to="routeAdd" variant="success">Adicionar</b-button>
+          <b-row v-else>
+            <b-col cols="12">
+              <slot name="footer"></slot>
+            </b-col>
+          </b-row>
         </template>
       </b-card>
     </div>
@@ -72,11 +83,29 @@ import Swal from 'sweetalert2'
       },
       route:{
         type: String,
-        required: true
       },
       routeAdd: {
         type: String,
-        required: true
+      },
+      customAction:{
+        type: Boolean,
+        default: false
+      },
+      show: {
+        type:Boolean,
+        default: false
+      },
+      edit: {
+        type:Boolean,
+        default: false
+      },
+      remove: {
+        type:Boolean,
+        default: false
+      },
+      buttomAdd: {
+        type:Boolean,
+        default: false
       }
     },
     methods:{

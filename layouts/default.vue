@@ -9,7 +9,7 @@
         <b-nav-item class="text-white" to="/usuario">Usuários</b-nav-item>
         <b-nav-item class="text-white" to="/category">Categorias</b-nav-item>
         <b-nav-item class="text-white" to="/product">Produtos</b-nav-item>
-        <b-nav-item class="text-white" to="/pedido">Pedidos</b-nav-item>
+        <b-nav-item class="text-white" to="/order">Pedidos</b-nav-item>
       </b-navbar-nav>
 
       <b-navbar-nav class="ml-auto">
