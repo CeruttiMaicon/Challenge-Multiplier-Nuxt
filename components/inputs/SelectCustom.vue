@@ -4,7 +4,7 @@
     :label="label"
     :description="description"
   >
-    <multiselect label="title" :placeholder="placeholder" @input="handleInput" v-model="initialValue" :options="options"></multiselect>
+    <multiselect label="title" @close="onTouch" :placeholder="placeholder" @input="handleInput" v-model="initialValue" :options="options"></multiselect>
 
     <b-form-invalid-feedback :state="stateError">
       {{ messageError}}
@@ -61,6 +61,7 @@ export default {
     return {
       size: "",
       initialValue: "",
+      isTouched: false,
     }
   },
   async mounted() {
@@ -78,6 +79,9 @@ export default {
     {
       this.$emit("input", e.value);
     },
+    onTouch () {
+      this.isTouched = true
+    }
   },
 }
 </script>

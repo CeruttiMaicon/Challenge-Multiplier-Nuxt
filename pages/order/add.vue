@@ -36,6 +36,7 @@ export default {
           }
         }).catch((error) => {
             this.error_message = error.response.data.error_message;
+            console.error(this.error_message)
             Swal.fire(
               'Erro!',
               error.response.data.message,

@@ -2,7 +2,7 @@
   <b-container class="bv-example-row">
     <b-row>
       <b-col>
-        <table-custom :fields="fields" :items="items" title="Pedidos" route="order" route-add="/order/add">
+        <table-custom buttom-add show remove :fields="fields" :items="items" title="Pedidos" route="order" route-add="/order/add">
           <template v-slot:header>
             <b-icon-clipboard-check font-scale="4" ></b-icon-clipboard-check>
           </template>

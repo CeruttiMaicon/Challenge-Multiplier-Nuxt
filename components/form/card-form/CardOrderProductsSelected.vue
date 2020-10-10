@@ -1,14 +1,14 @@
 <template>
   <b-card>
     <slot></slot>
-    <table-custom :fields="fields" :items="data" title="Produtos">
-      <template v-slot:action>
-        <b-button variant="danger">Excluir</b-button>
+    <table-custom :fields="fields" :items="data" title="Produtos Selecionados" customAction>
+      <template v-slot:action="slotProps">
+        <b-button variant="danger" @click="destroy(slotProps.index)"><b-icon-trash-fill /> Excluir</b-button>
+      </template>
+      <template v-slot:footer>
+        <slot name="footer"></slot>
       </template>
     </table-custom>
-    <template v-slot:footer>
-      <slot name="footer"></slot>
-    </template>
   </b-card>
 </template>
 
@@ -26,9 +26,15 @@ export default {
         { key: 'codigo', label: 'Código' },
         { key: 'name', label: 'Nome Produto' },
         { key: 'quantity', label: 'Quantidade' },
-        { key: 'sub_total', label: 'Sub total' }
+        { key: 'value', label: 'Preço' },
+        { key: 'sub_total', label: 'Subtotal' }
       ],
     }
   },
+  methods:{
+    destroy(id){
+      this.$emit('remove', id)
+    }
+  }
 }
 </script>

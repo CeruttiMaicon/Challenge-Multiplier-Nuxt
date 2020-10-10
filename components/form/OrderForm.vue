@@ -33,11 +33,29 @@
           <b-spinner style="width: 3rem; height: 3rem;" label="Loading..."></b-spinner>
         </div>
         <template v-slot:footer>
-          <b-button @click="add()" variant="success"><b-icon-cart-plus /> Adicionar Produto</b-button>
+          <b-button @click="add()" variant="success"><b-icon-cart-plus-fill /> Adicionar Produto</b-button>
         </template>
       </card-order>
-      <card-order-products-selected :data="products_selected">
-
+      <card-order-products-selected :data="products_selected" @remove="removeItem">
+        <template v-slot:footer>
+          <b-row>
+            <b-col cols="3">
+              <b-button type="submit" variant="primary"><b-icon-cart-fill/> Finalizar Compra</b-button>
+            </b-col>
+            <b-col cols="2">
+              <span class="h5">Totais:</span>
+            </b-col>
+            <b-col cols="2">
+              <span class="h5">Qtd Total: {{quantity}}</span>
+            </b-col>
+            <b-col cols="3">
+              <span class="h5">Valor Total: {{total}}</span>
+            </b-col>
+            <b-col cols="2">
+              <b-button @click="clear" variant="secondary"><b-icon-cart-dash-fill/> Limpar</b-button>
+            </b-col>
+          </b-row>
+        </template>
       </card-order-products-selected>
     </b-form>
   </div>
@@ -45,6 +63,7 @@
 
 <script>
 export default {
+
   props: {
     edit: {
       type: Boolean,
@@ -58,11 +77,13 @@ export default {
       type: Object | Array
     }
   },
+
   data() {
     return {
       form: {
         id:this.$route.params.edit || null,
-        product:""
+        products:[],
+        quantity:[]
       },
       products: [],
       rebuild: true,
@@ -74,17 +95,44 @@ export default {
       error_message:[],
       categories:[],
       add_product_api:[],
+      quantity:0,
+      total:(0).toFixed(2)
     }
   },
+
+  watch: {
+    products_selected: function (val) {
+      this.total = val.reduce((acc, {sub_total}) => {
+        return acc + Number(sub_total)
+      }, 0).toFixed(2);
+
+      this.quantity = val.reduce((acc, {quantity}) => {
+        return acc + Number(quantity)
+      }, 0);
+
+      this.form = {
+        ...this.form,
+        quantity: val.map(({quantity}) => quantity),
+        products: val.map(({id}) => id)
+      }
+    },
+  },
+
   mounted(){
     this.loading = false
     this.getProducts()
   },
+
   methods:{
     onSubmit(e){
       this.$emit("change", this.form);
       e.preventDefault();
     },
+
+    removeItem(index){
+      this.products_selected.splice(index,1)
+    },
+
     getProducts(){
       this.$axios
         .$get(
@@ -96,6 +144,7 @@ export default {
           });
         })
     },
+
     setProduct(id){
       return this.$axios
         .$get(
@@ -104,32 +153,36 @@ export default {
         .then(({success, data, message, error_message}) => {
           if(success == true)
           {
+            const subtotal = this.add_quantity * data.value
             this.add_product_api = {
-              id:data.id, name:data.name,
-              quantity:this.add_quantity,
-              sub_total:
-                (this.add_quantity*data.value).toLocaleString(
-                  'en-US', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })}
+              id: data.id,
+              name: data.name,
+              quantity: this.add_quantity,
+              value: parseFloat(data.value).toFixed(2),
+              sub_total: subtotal.toFixed(2)
+            }
           } else {
             this.message = message
             this.error_message = error_message
           }
         })
     },
+
     clear(e){
       this.loading = true
       this.form = {
         ...this.form,
-        name: "",
-        value: 0,
+        products: [],
+        quantity: []
       }
+
+      this.products_selected = []
+
       this.$nextTick(() => {
         this.loading = false
       })
     },
+
     rebuilder()
     {
       this.rebuild = false

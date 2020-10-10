@@ -30,21 +30,26 @@
               <b-th v-for="(it, index) in item" :key="index" >
                 {{it}}
               </b-th>
-              <b-th class="text-center">
-                <slot class="text-center" name="action"></slot>
+              <b-th v-if="customAction" class="text-center">
+                <slot v-bind:index="index" name="action"></slot>
               </b-th>
-              <b-th v-if="hasFooterAction()">
+              <b-th class="text-center" v-else>
                 <b-button-group>
-                  <b-button :to="route +`/`+item.codigo" >Visualizar</b-button>
-                  <b-button :to="route +`/edit/`+item.codigo" variant="primary">Editar</b-button>
-                  <b-button @click="destroy(item.codigo)" variant="danger">Excluir</b-button>
+                  <b-button v-if="show" :to="route +`/`+item.codigo" >Visualizar</b-button>
+                  <b-button v-if="edit" :to="route +`/edit/`+item.codigo" variant="primary">Editar</b-button>
+                  <b-button v-if="remove" @click="destroy(item.codigo)" variant="danger">Excluir</b-button>
                 </b-button-group>
               </b-th>
             </b-tr>
           </b-tbody>
         </b-table-simple>
         <template v-slot:footer>
-          <b-button :to="routeAdd" variant="success">Adicionar</b-button>
+          <b-button v-if="buttomAdd" :to="routeAdd" variant="success">Adicionar</b-button>
+          <b-row v-else>
+            <b-col cols="12">
+              <slot name="footer"></slot>
+            </b-col>
+          </b-row>
         </template>
       </b-card>
     </div>
@@ -81,14 +86,31 @@ import Swal from 'sweetalert2'
       },
       routeAdd: {
         type: String,
+      },
+      customAction:{
+        type: Boolean,
+        default: false
+      },
+      show: {
+        type:Boolean,
+        default: false
+      },
+      edit: {
+        type:Boolean,
+        default: false
+      },
+      remove: {
+        type:Boolean,
+        default: false
+      },
+      buttomAdd: {
+        type:Boolean,
+        default: false
       }
     },
     methods:{
       loader(){
         this.loading = false
-      },
-      hasFooterAction() {
-        return !this.$slots.action
       },
       destroy(id) {
         Swal.fire({
