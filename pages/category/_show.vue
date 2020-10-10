@@ -2,10 +2,7 @@
   <b-container class="bv-example-row">
     <b-row>
       <b-col>
-        <div class="text-center" v-if="loading">
-          <b-spinner style="width: 3rem; height: 3rem;" label="Loading..."></b-spinner>
-        </div>
-        <card-form v-else title="Visualizar Categoria" route-back="/category">
+        <card-form title="Visualizar Categoria" route-back="/category">
           <b-row>
             <b-col>
               Código: {{item.id}}
@@ -26,12 +23,12 @@
   export default {
     mounted() {
       this.getCategory()
+
     },
     data() {
       return {
         id: this.$route.params.show,
         item: [],
-        loading: true,
         message: "",
         error_message: ""
       }
@@ -51,7 +48,7 @@
               this.error_message = error_message
             }
           }).finally(() =>{
-            this.loading = false
+            this.$nuxt.$loading.finish()
           })
     }
   }

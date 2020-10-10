@@ -1,9 +1,6 @@
 <template>
   <div>
-    <div class="text-center" v-if="loading">
-      <b-spinner style="width: 3rem; height: 3rem;" label="Loading..."></b-spinner>
-    </div>
-    <b-form v-else @submit="onSubmit" >
+    <b-form @submit="onSubmit" >
       <card-order>
         <b-row v-if="rebuild">
           <b-col cols="7">
@@ -90,7 +87,6 @@ export default {
       products_selected: [],
       add_product:"",
       add_quantity:"",
-      loading:true,
       message:"",
       error_message:[],
       categories:[],
@@ -119,12 +115,12 @@ export default {
   },
 
   mounted(){
-    this.loading = false
     this.getProducts()
   },
 
   methods:{
     onSubmit(e){
+      this.$nuxt.$loading.start()
       this.$emit("change", this.form);
       e.preventDefault();
     },
@@ -169,7 +165,7 @@ export default {
     },
 
     clear(e){
-      this.loading = true
+       this.$nuxt.$loading.start()
       this.form = {
         ...this.form,
         products: [],
@@ -177,10 +173,6 @@ export default {
       }
 
       this.products_selected = []
-
-      this.$nextTick(() => {
-        this.loading = false
-      })
     },
 
     rebuilder()

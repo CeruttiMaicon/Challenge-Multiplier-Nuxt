@@ -2,10 +2,7 @@
   <b-container class="bv-example-row">
     <b-row>
       <b-col>
-        <div class="text-center" v-if="loading">
-          <b-spinner style="width: 3rem; height: 3rem;" label="Loading..."></b-spinner>
-        </div>
-        <card-form v-else title="Visualizar Pedido" route-back="/order">
+        <card-form title="Visualizar Pedido" route-back="/order">
           <b-row>
             <b-col>
               Código: {{item.id}}
@@ -103,7 +100,7 @@ export default {
             this.error_message = error_message
           }
         }).finally(() =>{
-          this.loading = false
+           this.$nuxt.$loading.finish()
         })
     },
     moment(date){

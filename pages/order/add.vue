@@ -2,6 +2,7 @@
   <b-container class="bv-example-row">
     <b-row>
       <b-col>
+        <loader v-if="loading" />
         <order-form @change="submit" title="Adicionar Pedido" :error-message="error_message"></order-form>
       </b-col>
     </b-row>
@@ -14,7 +15,8 @@ import Swal from 'sweetalert2'
 export default {
   data() {
     return {
-      error_message:""
+      error_message:"",
+      loading:false
     }
   },
   methods: {
@@ -42,6 +44,8 @@ export default {
               error.response.data.message,
               'error'
             )
+        }).finally(()=>{
+          this.$nuxt.$loading.finish()
         })
     }
   },
