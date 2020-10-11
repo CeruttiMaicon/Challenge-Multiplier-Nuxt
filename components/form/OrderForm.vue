@@ -37,7 +37,7 @@
         <template v-slot:footer>
           <b-row>
             <b-col cols="3">
-              <b-button type="submit" variant="primary"><b-icon-cart-fill/> Finalizar Compra</b-button>
+              <b-button :disabled="products_selected.length == 0" type="submit" variant="primary"><b-icon-cart-fill/> Finalizar Compra</b-button>
             </b-col>
             <b-col cols="2">
               <span class="h5">Totais:</span>
@@ -49,7 +49,7 @@
               <span class="h5">Valor Total: R$ {{total}}</span>
             </b-col>
             <b-col cols="2">
-              <b-button @click="clear" variant="secondary"><b-icon-cart-dash-fill/> Limpar</b-button>
+              <b-button :disabled="products_selected.length == 0" @click="clear" variant="secondary"><b-icon-cart-dash-fill/> Limpar</b-button>
             </b-col>
           </b-row>
         </template>
@@ -181,6 +181,7 @@ export default {
         this.rebuild = true
       })
     },
+
     async add(){
       let error_flag = false
 
