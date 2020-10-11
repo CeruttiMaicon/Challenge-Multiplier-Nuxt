@@ -4,7 +4,7 @@
     :label="label"
     :description="description"
   >
-    <multiselect label="title" @close="onTouch" :placeholder="placeholder" @input="handleInput" v-model="initialValue" :options="options"></multiselect>
+    <multiselect :allow-empty="false" :close-on-select="true" :show-labels="false" label="title" @close="onTouch" :placeholder="placeholder" @input="handleInput" v-model="initialValue" :options="options"></multiselect>
 
     <b-form-invalid-feedback :state="stateError">
       {{ messageError}}
