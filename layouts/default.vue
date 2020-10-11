@@ -1,28 +1,30 @@
 <template>
   <div>
-    <b-navbar toggleable="sm" type="dark" variant="dark">
-      <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
-
+    <b-navbar toggleable="md" type="dark" variant="dark">
       <b-navbar-brand to="/">{{appName}}</b-navbar-brand>
 
-      <b-navbar-nav>
-        <b-nav-item class="text-white" to="/user">Usuários</b-nav-item>
-        <b-nav-item class="text-white" to="/category">Categorias</b-nav-item>
-        <b-nav-item class="text-white" to="/product">Produtos</b-nav-item>
-        <b-nav-item class="text-white" to="/order">Pedidos</b-nav-item>
-      </b-navbar-nav>
+      <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
 
-      <b-navbar-nav class="ml-auto">
-        <b-nav-item-dropdown right>
-          <!-- Using 'button-content' slot -->
-          <template v-slot:button-content>
-            {{user.name}}
-          </template>
-          <b-dropdown-item to="/logs">Logs</b-dropdown-item>
-          <b-dropdown-item to="/user/add">Cadastrar Novo Usuário</b-dropdown-item>
-          <b-dropdown-item @click="logout" href="#">Logout</b-dropdown-item>
-        </b-nav-item-dropdown>
-      </b-navbar-nav>
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav>
+          <b-nav-item class="text-white" to="/user">Usuários</b-nav-item>
+          <b-nav-item class="text-white" to="/category">Categorias</b-nav-item>
+          <b-nav-item class="text-white" to="/product">Produtos</b-nav-item>
+          <b-nav-item class="text-white" to="/order">Pedidos</b-nav-item>
+        </b-navbar-nav>
+
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item-dropdown right>
+            <!-- Using 'button-content' slot -->
+            <template v-slot:button-content>
+              {{user.name}}
+            </template>
+            <b-dropdown-item to="/logs">Logs</b-dropdown-item>
+            <b-dropdown-item to="/user/add">Cadastrar Novo Usuário</b-dropdown-item>
+            <b-dropdown-item @click="logout" href="#">Logout</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+      </b-collapse>
     </b-navbar>
     <b-container class="py-5" fluid>
       <Nuxt />
