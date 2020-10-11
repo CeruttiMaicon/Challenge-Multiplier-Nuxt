@@ -109,6 +109,8 @@ export default {
     port: 8000 // default: 3000
   },
 
+  loading: '~/components/Loader.vue',
+
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {}
 };

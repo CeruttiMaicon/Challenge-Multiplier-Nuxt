@@ -17,7 +17,7 @@ export default {
   components: {Money},
   props:{
     value: {
-      type: Number,
+      type: Number | String,
       default: ""
     },
     label:{

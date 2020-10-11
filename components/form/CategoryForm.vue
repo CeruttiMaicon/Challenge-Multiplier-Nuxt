@@ -1,9 +1,6 @@
 <template>
   <div>
-    <div class="text-center" v-if="loading">
-      <b-spinner style="width: 3rem; height: 3rem;" label="Loading..."></b-spinner>
-    </div>
-    <b-form v-else @submit="onSubmit" >
+    <b-form v-if="rebuild" @submit="onSubmit" >
       <card-form :title="title" @clear="clear" route-back="/category" footer>
         <input-custom
           :state-error="typeof errorMessage.name != 'object' ? null : false"
@@ -38,23 +35,22 @@ export default {
     return {
       form: {
         id:this.$route.params.edit || null,
-        name:""
+        name:"",
       },
-      loading:true,
+      rebuild: true,
       message:"",
       error_message:[]
     }
   },
-  mounted(){
+  async mounted(){
     if(this.edit)
     {
-      this.getCategory()
-    } else {
-      this.loading = false
+      await this.getCategory()
     }
   },
   methods:{
     onSubmit(e){
+      this.$nuxt.$loading.start()
       this.$emit("change", this.form);
       e.preventDefault();
     },
@@ -73,19 +69,24 @@ export default {
           }
         })
         .finally(() =>{
-          this.loading = false
+          this.$nuxt.$loading.finish()
+          this.rebuilder()
         })
     },
     clear(e){
-      this.loading = true
       this.form = {
         ...this.form,
         name: ""
       }
+      this.rebuilder()
+    },
+    rebuilder()
+    {
+      this.rebuild = false
       this.$nextTick(() => {
-        this.loading = false
+        this.rebuild = true
       })
-    }
+    },
   }
 }
 </script>

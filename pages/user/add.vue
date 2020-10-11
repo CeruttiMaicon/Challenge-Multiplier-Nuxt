@@ -41,6 +41,8 @@ export default {
               error.response.data.message,
               'error'
             )
+        }).finally(()=>{
+          this.$nuxt.$loading.finish()
         })
     }
   },
