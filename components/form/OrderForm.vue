@@ -46,7 +46,7 @@
               <span class="h5">Qtd Total: {{quantity}}</span>
             </b-col>
             <b-col cols="3">
-              <span class="h5">Valor Total: {{total}}</span>
+              <span class="h5">Valor Total: R$ {{total}}</span>
             </b-col>
             <b-col cols="2">
               <b-button @click="clear" variant="secondary"><b-icon-cart-dash-fill/> Limpar</b-button>
@@ -165,7 +165,6 @@ export default {
     },
 
     clear(e){
-       this.$nuxt.$loading.start()
       this.form = {
         ...this.form,
         products: [],

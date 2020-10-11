@@ -1,7 +1,10 @@
 <template>
   <div>
-    <b-form @submit="onSubmit" >
-      <card-form v-if="rebuild" :title="title" @clear="clear" route-back="/product" footer>
+    <div class="text-center" v-if="loading">
+      <b-spinner style="width: 3rem; height: 3rem;" label="Loading..."></b-spinner>
+    </div>
+    <b-form v-else @submit="onSubmit" >
+      <card-form :title="title" @clear="clear" route-back="/product" footer>
         <input-custom
           :state-error="typeof errorMessage.name != 'object' ? null : false"
           :message-error="errorMessage.name != '' ? String(errorMessage.name) : String(errorMessage.name)"
@@ -56,7 +59,7 @@ export default {
         id:this.$route.params.edit || null,
         name:""
       },
-      rebuild:true,
+      loading:true,
       message:"",
       error_message:[],
       categories:[]
@@ -67,20 +70,14 @@ export default {
     if(this.edit)
     {
       this.getProduct()
+    } else {
+      this.loading = false
     }
   },
   methods:{
     onSubmit(e){
-      this.$nuxt.$loading.start()
       this.$emit("change", this.form);
       e.preventDefault();
-    },
-    rebuilder()
-    {
-      this.rebuild = false
-      this.$nextTick(() => {
-        this.rebuild = true
-      })
     },
     getProduct(){
       this.$axios
@@ -98,22 +95,19 @@ export default {
           }
         })
         .finally(() =>{
-          this.$nuxt.$loading.finish()
+          this.loading = false
         })
     },
     clear(e){
-      this.$nuxt.$loading.start()
-      console.log('oi')
+      this.loading = true
       this.form = {
         ...this.form,
         name: "",
         value: 0,
-        category_id: ""
       }
       this.$nextTick(() => {
-        this.$nuxt.$loading.finish()
+        this.loading = false
       })
-      this.rebuilder()
     },
     getCategories(){
       this.$axios

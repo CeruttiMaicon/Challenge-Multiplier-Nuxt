@@ -52,7 +52,7 @@ export default {
   data() {
     return {
       size: "",
-      initialValue: Number (this.value),
+      initialValue: this.value,
       money: {
         decimal: ',',
         thousands: '.',

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-form @submit="onSubmit" >
+    <b-form v-if="rebuild" @submit="onSubmit" >
       <card-form :title="title" @clear="clear" route-back="/category" footer>
         <input-custom
           :state-error="typeof errorMessage.name != 'object' ? null : false"
@@ -35,8 +35,9 @@ export default {
     return {
       form: {
         id:this.$route.params.edit || null,
-        name:""
+        name:"",
       },
+      rebuild: true,
       message:"",
       error_message:[]
     }
@@ -69,18 +70,23 @@ export default {
         })
         .finally(() =>{
           this.$nuxt.$loading.finish()
+          this.rebuilder()
         })
     },
     clear(e){
-      this.$nuxt.$loading.start()
       this.form = {
         ...this.form,
         name: ""
       }
+      this.rebuilder()
+    },
+    rebuilder()
+    {
+      this.rebuild = false
       this.$nextTick(() => {
-        this.$nuxt.$loading.finish()
+        this.rebuild = true
       })
-    }
+    },
   }
 }
 </script>
