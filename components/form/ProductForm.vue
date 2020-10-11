@@ -104,6 +104,7 @@ export default {
         ...this.form,
         name: "",
         value: 0,
+        category_id: 0
       }
       this.$nextTick(() => {
         this.loading = false
