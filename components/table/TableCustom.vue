@@ -19,7 +19,7 @@
           <b-thead >
             <b-tr >
               <b-th v-for="(field, index) in fields" :key="index" >{{field.label}}</b-th>
-              <b-th class="text-center" >Opções</b-th>
+              <b-th v-if="!removeOption" class="text-center" >Opções</b-th>
             </b-tr>
           </b-thead>
           <b-tbody>
@@ -43,7 +43,7 @@
             </b-tr>
           </b-tbody>
         </b-table-simple>
-        <template v-slot:footer>
+        <template v-if="buttomAdd" v-slot:footer>
           <b-button v-if="buttomAdd" :to="routeAdd" variant="success">Adicionar</b-button>
           <b-row v-else>
             <b-col cols="12">
@@ -104,6 +104,10 @@ import Swal from 'sweetalert2'
         default: false
       },
       buttomAdd: {
+        type:Boolean,
+        default: false
+      },
+      removeOption: {
         type:Boolean,
         default: false
       }

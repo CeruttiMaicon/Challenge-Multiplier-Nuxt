@@ -2,9 +2,9 @@
   <b-container class="bv-example-row">
     <b-row>
       <b-col>
-        <table-custom :footer="false" buttom-add show remove custom-action :remove-option="false" :fields="fields" :items="items" title="Usuários" route="user" route-add="/user/add">
+        <table-custom :footer="false" :buttom-add="false" show remove custom-action :remove-option="true" :fields="fields" :items="items" title="Logs" >
           <template v-slot:header>
-            <b-icon-person font-scale="4" ></b-icon-person>
+            <b-icon-info-circle font-scale="4" ></b-icon-info-circle>
           </template>
         </table-custom>
       </b-col>
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 
 export default {
   mounted() {
@@ -22,20 +23,25 @@ export default {
     return {
       fields: [
         { key: 'codigo', label: 'Código' },
-        { key: 'message', label: 'Mensagem' }
+        { key: 'message', label: 'Mensagem' },
+        { key: 'date', label: 'Data' }
       ],
       items: [],
     }
   },
   methods:{
+    moment(date){
+      return moment(date).format('DD/MM/YYYY HH:mm:ss')
+    },
     getLogs(){
       this.$axios
         .$get(
           "log"
         )
         .then(({data}) => {
-          this.items = data.map(({id, message}) => {
-            return {codigo:id, message }
+          this.items = data.map(({id, message, created_at}) => {
+            const date = this.moment(created_at)
+            return {codigo:id, message, date }
           });
         })
     }
