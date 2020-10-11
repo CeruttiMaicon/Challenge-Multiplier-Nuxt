@@ -43,7 +43,7 @@
             </b-tr>
           </b-tbody>
         </b-table-simple>
-        <template v-if="buttomAdd" v-slot:footer>
+        <template v-slot:footer>
           <b-button v-if="buttomAdd" :to="routeAdd" variant="success">Adicionar</b-button>
           <b-row v-else>
             <b-col cols="12">
