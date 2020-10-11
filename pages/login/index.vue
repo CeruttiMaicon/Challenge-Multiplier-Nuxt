@@ -2,35 +2,39 @@
   <div class="container">
     <div>
       <Logo />
-       <b-form @submit="onSubmit">
-          <b-form-group
-            id="input-group-1"
-            label="E-mail:"
-            label-for="input-1"
-          >
-            <b-form-input
-              id="input-1"
-              v-model="form.email"
-              type="email"
-              required
-              :state="validation"
-            ></b-form-input>
-          </b-form-group>
+      <b-form @submit="onSubmit">
+        <b-form-group
+          id="input-group-1"
+          label="E-mail:"
+          label-for="input-1"
+        >
+          <b-form-input
+            id="input-1"
+            v-model="form.email"
+            type="email"
+            required
+            :state="validation"
+          ></b-form-input>
+        </b-form-group>
 
-          <b-form-group id="input-group-2" label="Senha:" label-for="input-2">
-            <b-form-input
-              id="input-2"
-              v-model="form.password"
-              type="password"
-              required
-              :state="validation"
-            ></b-form-input>
-            <b-form-invalid-feedback class="text-center" :state="validation">
-              {{messageError}}
-            </b-form-invalid-feedback>
-          </b-form-group>
-          <b-button type="submit" block variant="primary">Login</b-button>
-       </b-form>
+        <b-form-group id="input-group-2" label="Senha:" label-for="input-2">
+          <b-form-input
+            id="input-2"
+            v-model="form.password"
+            type="password"
+            required
+            :state="validation"
+          ></b-form-input>
+          <b-form-invalid-feedback class="text-center" :state="validation">
+            {{messageError}}
+          </b-form-invalid-feedback>
+        </b-form-group>
+        <b-button type="submit" block variant="primary">Login</b-button>
+        <div class="text-center text-danger" v-if="status">
+          <b-spinner type="grow" label="Loading..."></b-spinner>
+          Server offline
+        </div>
+      </b-form>
     </div>
   </div>
 </template>
@@ -38,6 +42,9 @@
 <script>
 export default {
   layout: 'login',
+  mounted() {
+    this.statusServer()
+  },
   data() {
       return {
         form: {
@@ -46,10 +53,26 @@ export default {
         },
         show:true,
         validation:null,
-        messageError: ""
+        messageError: "",
+        status: false
       }
     },
     methods: {
+      statusServer() {
+        this.$nextTick(function () {
+            window.setInterval(() => {
+              this.$axios
+                .$get(
+                  'status'
+                )
+                .then((data) => {
+                  data == 1 ? this.status = false : this.status = true
+                }).catch((error) => {
+                  this.status = true
+                })
+            },3000);
+        })
+      },
       onSubmit(e) {
         e.preventDefault()
          this.$auth
