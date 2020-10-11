@@ -1,7 +1,10 @@
 <template>
   <div>
     <b-navbar toggleable="md" type="dark" variant="dark">
-      <b-navbar-brand to="/">{{appName}}</b-navbar-brand>
+      <b-navbar-brand to="/">
+        <img src="~/assets/images/logo.png/" width="30" height="30" class="d-inline-block align-top" alt="Logo Multiplier">
+        {{appName}}
+      </b-navbar-brand>
 
       <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
 
